@@ -10,18 +10,23 @@ For the full list of settings and their values, see
 https://docs.djangoproject.com/en/3.2/ref/settings/
 """
 import os
+import sys
 from pathlib import Path
 import environ
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 STORAGE_DIR = os.path.join(BASE_DIR, 'storage')
+sys.path.insert(0, os.path.join(BASE_DIR, "apps"))
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/3.2/howto/deployment/checklist/
 env = environ.Env(
     # set casting, default value
     DEBUG=(bool, True)
 )
+env_file = os.path.join(BASE_DIR, ".env")
+if os.path.exists(env_file):
+    environ.Env.read_env(env_file)
 # SECURITY WARNING: keep the secret key used in production secret!
 SECRET_KEY = 'django-insecure-w$@68@ku#$#12^+#jb%m@69hki+=wm$u!z%w_v18a2*8&c)c@)'
 
@@ -40,6 +45,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'common.apps.CommonConfig'
 ]
 
 MIDDLEWARE = [
