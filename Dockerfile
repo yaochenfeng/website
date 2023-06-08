@@ -12,5 +12,5 @@ RUN --mount=type=cache,target=/root/.cache \
 
 
 COPY . .
-
+ENTRYPOINT ["/app/build.sh"]
 CMD gunicorn website.wsgi --bind 0.0.0.0:8000
