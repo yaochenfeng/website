@@ -4,5 +4,3 @@ whitenoise[brotli]
 gunicorn
 #模板
 django-admin-volt
-## 数据库
-psycopg2
