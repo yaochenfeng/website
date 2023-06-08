@@ -6,3 +6,5 @@ gunicorn
 django-admin-volt
 # 数据库
 psycopg2
+#api
+djangorestframework
