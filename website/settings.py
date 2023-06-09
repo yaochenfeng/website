@@ -87,6 +87,9 @@ WSGI_APPLICATION = 'website.wsgi.application'
 DATABASES = {
     "default": env.db_url(default=f'sqlite:///{STORAGE_DIR}/db.sqlite3'),
 }
+CACHES = {
+    'default': env.cache_url(default=f'filecache:///{STORAGE_DIR}/cache')
+}
 
 # Password validation
 # https://docs.djangoproject.com/en/3.2/ref/settings/#auth-password-validators
