@@ -7,4 +7,5 @@ django-admin-volt
 # 数据库
 psycopg2
 # 异步任务和redis
+django_redis
 celery[redis]
