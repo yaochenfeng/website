@@ -1,4 +1,4 @@
-django  ~=3.2
+django~=3.2
 django-environ
 whitenoise[brotli]
 gunicorn
@@ -6,6 +6,8 @@ gunicorn
 django-admin-volt
 # 数据库
 psycopg2
+#api
+djangorestframework
 # 异步任务和redis
 django_redis
 celery[redis]
