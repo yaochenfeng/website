@@ -9,6 +9,10 @@ from rest_framework.views import APIView
 from common.serializers import UserSerializer
 
 
+def profile(request):
+    return render(request, 'accounts/profile.html')
+
+
 class UserViewSet(viewsets.ModelViewSet):
     """
     API endpoint that allows users to be viewed or edited.

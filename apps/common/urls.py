@@ -9,6 +9,7 @@ from common.routers import router
 urlpatterns = [
     path(f'{settings.STATIC_URL.strip("/")}/<path:path>', serve, {"document_root": settings.STATIC_ROOT}),
     path(f'{settings.MEDIA_URL.strip("/")}/<path:path>', serve, {"document_root": settings.MEDIA_ROOT}),
+    path('accounts/profile/', views.profile, name='profile'),
     path('', include('admin_volt.urls')),
 ]
 
