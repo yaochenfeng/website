@@ -28,7 +28,7 @@ def generate_filename(instance, filename):
 
 class UserProfile(BaseModel):
     created_by = models.OneToOneField(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name='profile')
-    avatar = models.ImageField(default='avatar-default.jpg', upload_to=generate_filename)
+    avatar = models.ImageField(default='/static/image/avatar.jpg', upload_to=generate_filename)
     nickname = models.CharField('昵称', max_length=100, blank=True, null=True)
     address = models.CharField('地址', max_length=100, blank=True, null=True)
 
