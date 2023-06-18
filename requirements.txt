@@ -12,3 +12,5 @@ djangorestframework
 # 异步任务和redis
 django_redis
 celery[redis]
+#登录
+django-allauth
