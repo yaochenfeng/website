@@ -9,8 +9,6 @@ RUN groupadd -r app && useradd --no-log-init -r -g app app
 WORKDIR /app
 
 FROM app-base as builder-base
-# 国内加速处理
-RUN sed -i 's#http://deb.debian.org#https://mirrors.163.com#g' /etc/apt/sources.list
 COPY requirements.txt /app/requirements.txt
 RUN --mount=type=cache,target=/root/.cache \
     apt-get update && \

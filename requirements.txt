@@ -1,12 +1,11 @@
-django~=3.2
+Django>=3.0,<4.0
+psycopg2>=2.8
 django-environ
 whitenoise[brotli]
 gunicorn
 Pillow
 #模板
 django-admin-volt
-# 数据库
-psycopg2
 #api
 djangorestframework
 # 异步任务和redis
