@@ -22,7 +22,7 @@ sys.path.insert(0, os.path.join(BASE_DIR, "apps"))
 # See https://docs.djangoproject.com/en/3.2/howto/deployment/checklist/
 env = environ.Env(
     # set casting, default value
-    DEBUG=(bool, True)
+    DEBUG=(bool, True),
 )
 env_file = os.path.join(BASE_DIR, ".env")
 if os.path.exists(env_file):
@@ -47,6 +47,8 @@ INSTALLED_APPS = [
     'django.contrib.sites',
     'django.contrib.staticfiles',
     'rest_framework',
+    'django_celery_results',
+    'django_celery_beat',
     'common.apps.CommonConfig',
     'allauth',
     'allauth.account',
@@ -159,3 +161,11 @@ AUTHENTICATION_BACKENDS = [
     # `allauth` specific authentication methods, such as login by e-mail
     'allauth.account.auth_backends.AuthenticationBackend',
 ]
+
+# Celery Configuration Options
+CELERY_TASK_TRACK_STARTED = True
+CELERY_TASK_TIME_LIMIT = 30 * 60
+CELERY_RESULT_BACKEND = 'django-db'
+CELERY_CACHE_BACKEND = 'django-cache'
+CELERY_BEAT_SCHEDULER = 'django_celery_beat.schedulers.DatabaseScheduler'
+CELERY_BROKER_URL = env('CELERY_BROKER_URL', default=env("REDIS_URL", default='redis://:website@127.0.0.1:6379/1'))

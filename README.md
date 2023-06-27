@@ -14,3 +14,23 @@ django 实现常用 website
 ```shell
 docker compose up --build
 ```
+
+## 异步任务
+
+1. django admin 后台管理需要分发定时任务(可选)
+
+```shell
+celery -A website beat -l info
+```
+
+2. 启动工作节点
+
+```shell
+celery -A website worker -E
+```
+
+单任务
+
+```shell
+celery -A website worker -P solo -l info
+ ```

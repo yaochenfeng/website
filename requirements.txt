@@ -9,7 +9,9 @@ django-admin-volt
 #api
 djangorestframework
 # 异步任务和redis
+django-celery-results
+django_celery_beat
 django_redis
-celery[redis]
+celery
 #登录
 django-allauth
