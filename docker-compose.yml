@@ -9,20 +9,34 @@ services:
     ports:
       - "8000:8000"
     environment:
+      - DEBUG=true
       - DATABASE_URL=psql://website:website@db/website
+      - CACHE_URL=rediscache://redis:6379/1?client_class=django_redis.client.DefaultClient&password=website
     depends_on:
       - db
+      - redis
 
   db:
     image: postgres
+    restart: always
     volumes:
-      - web-db:/var/lib/postgresql/data
+      - db:/var/lib/postgresql/data
     ports:
       - "5432:5432"
     environment:
       - POSTGRES_DB=website
       - POSTGRES_USER=website
       - POSTGRES_PASSWORD=website
+
+  redis:
+    image: redis
+    restart: always
+    command: redis-server --save 20 1 --loglevel warning --requirepass website
+    volumes:
+      - cache:/data
+    ports:
+      - "6379:6379"
+
 volumes:
-  web-data:
-  web-db:
+  db:
+  cache:

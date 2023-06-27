@@ -8,7 +8,7 @@ from common.routers import router
 
 urlpatterns = [
     path('accounts/', include('allauth.urls')),
-    path('accounts/profile/', views.profile, name='profile'),
+    path('accounts/profile/', cache_page(60 * 15)(views.profile), name='profile'),
     path('', include('admin_volt.urls')),
 ]
 if not settings.DEBUG:
