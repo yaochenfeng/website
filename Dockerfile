@@ -1,20 +1,33 @@
-# syntax = docker/dockerfile:1.2
-ARG IMAGE=python:3.7-slim-buster
-FROM ${IMAGE} as app-base
-LABEL maintainer="yaochenfeng <yaochenfeng45@gmail.com>"
-# python环境
-ENV PYTHONUNBUFFERED=1 \
-    DEBUG=false
-RUN groupadd -r app && useradd --no-log-init -r -g app app
+FROM python:3.7-slim as base
+
+ENV PYTHONFAULTHANDLER=1 \
+    PYTHONHASHSEED=random \
+    PYTHONUNBUFFERED=1
+
+RUN apt-get update && apt-get install -y gcc libffi-dev g++ libpq-dev
 WORKDIR /app
 
-FROM app-base as builder-base
-COPY requirements.txt /app/requirements.txt
-RUN --mount=type=cache,target=/root/.cache \
-    apt-get update && \
-    apt-get -y install libpq-dev gcc && \
-    pip install --upgrade pip && pip install --no-cache-dir psycopg2 gunicorn && \
-    pip install --no-cache-dir -r /app/requirements.txt
+FROM base as builder
+
+ENV PIP_DEFAULT_TIMEOUT=100 \
+    PIP_DISABLE_PIP_VERSION_CHECK=1 \
+    PIP_NO_CACHE_DIR=1 \
+    POETRY_VERSION=1.16.0
+
+RUN pip install "poetry"
+RUN python -m venv /venv
+
+COPY pyproject.toml poetry.lock ./
+RUN . /venv/bin/activate && poetry install --no-dev --no-root
+
 COPY . .
+RUN . /venv/bin/activate && poetry build
+
+FROM base as final
+
+COPY --from=builder /venv /venv
+COPY --from=builder /app/dist .
+
+RUN . /venv/bin/activate && pip install *.whl
 ENTRYPOINT ["/app/build.sh"]
 CMD gunicorn website.wsgi --bind 0.0.0.0:8000
