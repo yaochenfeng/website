@@ -3,12 +3,10 @@ django-environ
 whitenoise[brotli]
 gunicorn
 Pillow
-#模板
+
 django-admin-volt
-# 数据库
-psycopg2
-#api
 djangorestframework
-# 异步任务和redis
+
 django_redis
 celery[redis]
+psycopg2-binary
