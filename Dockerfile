@@ -12,8 +12,7 @@ FROM app-base as builder-base
 # 国内加速处理
 RUN sed -i 's#http://deb.debian.org#https://mirrors.163.com#g' /etc/apt/sources.list
 COPY requirements.txt /app/requirements.txt
-RUN --mount=type=cache,target=/root/.cache \
-    apt-get update && \
+RUN apt-get update && \
     apt-get -y install libpq-dev gcc && \
     pip install --upgrade pip && pip install --no-cache-dir psycopg2 gunicorn && \
     pip install --no-cache-dir -r /app/requirements.txt
