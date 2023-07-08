@@ -9,10 +9,11 @@ RUN groupadd -r app && useradd --no-log-init -r -g app app
 WORKDIR /app
 
 COPY poetry.lock pyproject.toml ./
-RUN apt-get update && \
-    apt-get -y install libpq-dev gcc && \
-    pip install --upgrade pip && pip install poetry && \
-    poetry install --no-dev
+RUN apt-get update \
+    && apt-get -y install libpq-dev gcc \
+    && pip install --upgrade pip && pip install poetry \
+    && poetry config virtualenvs.create false \
+    && poetry install --no-dev
 COPY . .
 ENTRYPOINT ["/app/build.sh"]
 CMD gunicorn website.wsgi --bind 0.0.0.0:8000
