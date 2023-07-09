@@ -27,4 +27,5 @@ COPY . .
 ENTRYPOINT ["/app/build.sh"]
 CMD gunicorn website.wsgi --bind 0.0.0.0:8000
 EXPOSE 8000
+VOLUME /app/storage
 HEALTHCHECK CMD curl --fail http://localhost:8000/api || exit 1
