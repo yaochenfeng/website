@@ -7,9 +7,10 @@ from common import views
 from common.routers import router
 
 urlpatterns = [
-
     path('accounts/profile/', views.profile, name='profile'),
+    path('blog', include('blog.urls')),
     path('', include('admin_volt.urls')),
+    path('api/auth', include('rest_framework.urls', namespace='rest_framework'))
 ]
 if not settings.DEBUG:
     urlpatterns += [
