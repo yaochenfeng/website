@@ -4,7 +4,7 @@ from rest_framework import serializers
 from common.models import UserProfile
 
 
-class BaseModelSerializer(serializers.ModelSerializer):
+class BaseModelSerializer(serializers.HyperlinkedModelSerializer):
     created_at = serializers.DateTimeField(read_only=True)
     modified_at = serializers.DateTimeField(read_only=True)
     created_by = serializers.HiddenField(default=serializers.CurrentUserDefault())
