@@ -6,6 +6,15 @@ from .models import UserProfile
 
 
 # Register your models here.
+class BaseModelAdmin(admin.ModelAdmin):
+    readonly_fields = ('created_at', 'updated_at', 'created_by', 'is_active')
+    list_display = ('id', 'created_by', '__str__', 'created_at')
+
+    def save_model(self, request, obj, form, change):
+        if not change:
+            obj.created_by = request.user
+        obj.save()
+
 
 class UserProfileAdmin(admin.StackedInline):
     model = UserProfile

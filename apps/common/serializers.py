@@ -1,16 +1,17 @@
 from django.contrib.auth.models import User
 from rest_framework import serializers
 
-from common.models import UserProfile
+from common.models import UserProfile, BaseModel
 
 
 class BaseModelSerializer(serializers.HyperlinkedModelSerializer):
     created_at = serializers.DateTimeField(read_only=True)
     modified_at = serializers.DateTimeField(read_only=True)
     created_by = serializers.HiddenField(default=serializers.CurrentUserDefault())
+    is_active = serializers.HiddenField(default=True)
 
     class Meta:
-        model = None
+        model = BaseModel
         fields = '__all__'
         read_only_fields = ['created_at', 'modified_at', 'created_by']
 
