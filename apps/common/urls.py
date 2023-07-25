@@ -7,9 +7,7 @@ from common import views
 from common.routers import router
 
 urlpatterns = [
-
     path('accounts/profile/', views.profile, name='profile'),
-    path('', include('admin_volt.urls')),
 ]
 if not settings.DEBUG:
     urlpatterns += [
