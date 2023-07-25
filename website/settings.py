@@ -139,6 +139,7 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 CACHES = {
     'default': env.cache(default=f'filecache://{os.path.join(STORAGE_DIR, "cache")}'),
 }
+SITE_ID = env("SITE_ID", default=1)
 REST_FRAMEWORK = {
     'DEFAULT_PAGINATION_CLASS': 'rest_framework.pagination.PageNumberPagination',
     'PAGE_SIZE': 10
