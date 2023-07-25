@@ -20,10 +20,7 @@ STORAGE_DIR = os.path.join(BASE_DIR, 'storage')
 sys.path.insert(0, os.path.join(BASE_DIR, "apps"))
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/3.2/howto/deployment/checklist/
-env = environ.Env(
-    # set casting, default value
-    DEBUG=(bool, True)
-)
+env = environ.Env()
 env_file = os.path.join(BASE_DIR, ".env")
 if os.path.exists(env_file):
     environ.Env.read_env(env_file)
@@ -31,7 +28,7 @@ if os.path.exists(env_file):
 SECRET_KEY = 'django-insecure-w$@68@ku#$#12^+#jb%m@69hki+=wm$u!z%w_v18a2*8&c)c@)'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = env("DEBUG")
+DEBUG = env("DEBUG", default=False)
 
 ALLOWED_HOSTS = ['*']
 
@@ -141,7 +138,7 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 CACHES = {
     'default': env.cache(default=f'filecache://{os.path.join(STORAGE_DIR, "cache")}'),
 }
-
+SITE_ID = 1
 REST_FRAMEWORK = {
     'DEFAULT_PAGINATION_CLASS': 'rest_framework.pagination.PageNumberPagination',
     'PAGE_SIZE': 10
