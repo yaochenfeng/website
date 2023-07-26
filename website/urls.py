@@ -20,6 +20,7 @@ from common.routers import router
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('', include('common.urls')),
+    path('tinymce/', include('tinymce.urls')),
 ]
 urlpatterns += [
     path('api/', include(router.urls)),
