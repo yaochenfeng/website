@@ -1,9 +1,7 @@
-<!DOCTYPE html>
-<html>
-<head>
-    <title>{{ flatpage.title }}</title>
-</head>
-<body>
-{{ flatpage.content }}
-</body>
-</html>
+{% extends 'layouts/web.html' %}
+{% load static %}
+
+{% block content %}
+    {{ flatpage.content }}
+{% endblock content %}
+
