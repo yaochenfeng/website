@@ -8,6 +8,7 @@ from common.routers import router
 
 urlpatterns = [
     path('accounts/profile/', views.profile, name='profile'),
+    path('tinymce/', include('tinymce.urls')),
 ]
 if not settings.DEBUG:
     urlpatterns += [

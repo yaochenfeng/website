@@ -15,12 +15,13 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path, include
+from django.views.generic import TemplateView
+
 from common.routers import router
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('', include('common.urls')),
-    path('tinymce/', include('tinymce.urls')),
+    path('/', include('common.urls')),
 ]
 urlpatterns += [
     path('api/', include(router.urls)),
