@@ -10,10 +10,5 @@ urlpatterns = [
     path('accounts/profile/', views.profile, name='profile'),
     path('tinymce/', include('tinymce.urls')),
 ]
-if not settings.DEBUG:
-    urlpatterns += [
-        path(f'{settings.STATIC_URL.strip("/")}/<path:path>', serve, {"document_root": settings.STATIC_ROOT}),
-        path(f'{settings.MEDIA_URL.strip("/")}/<path:path>', serve, {"document_root": settings.MEDIA_ROOT}),
-    ]
 
 router.register(r'users', views.UserViewSet)

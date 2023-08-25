@@ -13,9 +13,11 @@ Including another URLconf
     1. Import the include() function: from django.urls import include, path
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
+from django.conf import settings
 from django.contrib import admin
 from django.urls import path, include
 from django.views.generic import TemplateView
+from django.views.static import serve
 
 from common.routers import router
 
@@ -24,6 +26,11 @@ urlpatterns = [
     path('/', include('common.urls')),
     path("", TemplateView.as_view(template_name="pages/index.html")),
 ]
+if not settings.DEBUG:
+    urlpatterns += [
+        path(f'{settings.STATIC_URL.strip("/")}/<path:path>', serve, {"document_root": settings.STATIC_ROOT}),
+        path(f'{settings.MEDIA_URL.strip("/")}/<path:path>', serve, {"document_root": settings.MEDIA_ROOT}),
+    ]
 urlpatterns += [
     path('api/', include(router.urls)),
 ]
