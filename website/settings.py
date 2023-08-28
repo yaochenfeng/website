@@ -46,6 +46,9 @@ INSTALLED_APPS = [
     'common.apps.CommonConfig',
     'django.contrib.flatpages',
     'tinymce',
+    'allauth',
+    'allauth.account',
+    'allauth.socialaccount',
 ]
 
 MIDDLEWARE = [
@@ -146,3 +149,11 @@ REST_FRAMEWORK = {
     'PAGE_SIZE': 10
 }
 USE_X_FORWARDED_HOST = True
+
+# django-allauth
+AUTHENTICATION_BACKENDS = [
+    # Needed to login by username in Django admin, regardless of `allauth`
+    'django.contrib.auth.backends.ModelBackend',
+    # `allauth` specific authentication methods, such as login by email
+    'allauth.account.auth_backends.AuthenticationBackend',
+]

@@ -23,7 +23,8 @@ from common.routers import router
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('/', include('common.urls')),
+    path('', include('common.urls')),
+    path('accounts/', include('allauth.urls')),
     path("", TemplateView.as_view(template_name="pages/index.html")),
 ]
 if not settings.DEBUG:
