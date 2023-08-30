@@ -1,4 +1,5 @@
 from django.contrib import admin
+from django.contrib.auth.decorators import login_required
 from django.contrib.flatpages.admin import FlatPageAdmin
 from django.contrib.flatpages.models import FlatPage
 from django.utils.translation import gettext_lazy as _
@@ -55,3 +56,9 @@ admin.site.register(FlatPage, FlatPageAdmin)
 admin.site.unregister(User)
 # register new user admin
 admin.site.register(User, UserAdmin)
+
+
+
+
+# Register your models here.
+admin.site.login = login_required(admin.site.login)
