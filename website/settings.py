@@ -234,3 +234,7 @@ INTERNAL_IPS = [
 
 MEDIA_URL = "media/"
 MEDIA_ROOT = str(STORAGE_DIR / "media")
+
+
+# CSRF处理
+CSRF_TRUSTED_ORIGINS = [f'https://{host}' for host in ALLOWED_HOSTS]
