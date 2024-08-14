@@ -1,4 +1,9 @@
-# Django template for a new django CMS 4 project
+# Django CMS 4 project
+
+项目体验地址: https://website-8uhf.onrender.com/
+
+数据不保存
+
 
 A Django template for a typical django CMS installation with no 
 special bells or whistles. It is supposed as a starting point 
