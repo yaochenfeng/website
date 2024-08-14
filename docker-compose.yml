@@ -1,0 +1,9 @@
+version: '3.8'
+
+services:
+  web:
+    build: .
+    ports:
+      - "8000:8000"  # 将容器的8000端口映射到主机的8000端口
+    environment:
+      DJANGO_SETTINGS_MODULE: website.settings  # 设置环境变量

@@ -31,3 +31,9 @@ To install django CMS 4 by hand type the following commands:
 Note: If you run into a problem of missing dependencies, please
 update `pip` using `pip install -U pip` before running the 
 `djangocms` command.
+
+
+## 使用docke构建运行
+   ```
+   docker-compose up --build
+   ```
