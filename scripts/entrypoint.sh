@@ -13,7 +13,7 @@
 
 # 应用数据库迁移
 echo "Applying database migrations..."
-python manage.py migrate
+python manage.py makemigrations && python manage.py migrate
 
 # 收集静态文件
 #echo "Collecting static files..."
