@@ -14,8 +14,10 @@ https://docs.django-cms.org/en/release-4.1.x/reference/configuration.html
 """
 
 import os
-from pathlib import Path
+from os.path import abspath
 
+import environ
+from pathlib import Path
 from django.utils.translation import gettext_lazy as _
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
@@ -24,15 +26,16 @@ STORAGE_DIR = BASE_DIR / 'storage'
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/5.0/howto/deployment/checklist/
-
+env = environ.Env(
+    DEBUG=(bool, False)
+)
+environ.Env.read_env(os.path.join(BASE_DIR, '.env'))
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'django-insecure-6%iv$$@e^+tme9gq7+#rca759k-gfkh=6_w9hfhidfxg4w-opr'
+SECRET_KEY = env("SECRET_KEY", default='django-insecure-6%iv$$@e^+tme9gq7+#rca759k-gfkh=6_w9hfhidfxg4w-opr')
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
-
+DEBUG = env('DEBUG')
 ALLOWED_HOSTS = os.environ.get('ALLOWED_HOSTS', default="*").split(",")
-
 
 # Application definition
 
@@ -46,7 +49,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'django.contrib.sites',
-     # CMS base apps
+    # CMS base apps
     'cms',
     'menus',
 
@@ -85,6 +88,7 @@ INSTALLED_APPS = [
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
+    'whitenoise.middleware.WhiteNoiseMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
@@ -130,17 +134,11 @@ THUMBNAIL_PROCESSORS = (
 
 WSGI_APPLICATION = 'website.wsgi.application'
 
-
 # Database
 # https://docs.djangoproject.com/en/5.0/ref/settings/#databases
-
 DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': STORAGE_DIR / 'db.sqlite3',
-    }
+    'default': env.db(default="sqlite:///" + str(STORAGE_DIR / 'db.sqlite3'))
 }
-
 
 # Password validation
 # https://docs.djangoproject.com/en/5.0/ref/settings/#auth-password-validators
@@ -159,7 +157,6 @@ AUTH_PASSWORD_VALIDATORS = [
         'NAME': 'django.contrib.auth.password_validation.NumericPasswordValidator',
     },
 ]
-
 
 # Internationalization
 # https://docs.djangoproject.com/en/5.0/topics/i18n/
@@ -185,7 +182,10 @@ USE_TZ = True
 
 STATIC_URL = 'static/'
 STATIC_ROOT = STORAGE_DIR / "static/"
-
+MEDIA_URL = "/media/"
+MEDIA_ROOT = STORAGE_DIR / "media/"
+if not DEBUG:
+    STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 # Default primary key field type
 # https://docs.djangoproject.com/en/5.0/ref/settings/#default-auto-field
 
@@ -234,10 +234,6 @@ INTERNAL_IPS = [
 
 # Add project-wide static files directory
 # https://docs.djangoproject.com/en/5.0/ref/settings/#media-root
-
-MEDIA_URL = "media/"
-MEDIA_ROOT = str(STORAGE_DIR / "media")
-
 
 # CSRF处理
 CSRF_TRUSTED_ORIGINS = [f'https://{host}' for host in ALLOWED_HOSTS]

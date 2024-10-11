@@ -4,3 +4,5 @@ djangocms-frontend
 django-filer
 djangocms-text-ckeditor
 django-fsm<3
+django-environ
+whitenoise[brotli]
