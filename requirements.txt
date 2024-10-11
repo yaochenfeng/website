@@ -6,3 +6,4 @@ djangocms-text-ckeditor
 django-fsm<3
 django-environ
 whitenoise[brotli]
+django-cms==4.1.2
